@@ -6,4 +6,4 @@ response = requests.get(url)
 content = response.json()
 
 print(type(content))
-print(content['articles'][0][title])
+print(content['articles'][0]['description'])
