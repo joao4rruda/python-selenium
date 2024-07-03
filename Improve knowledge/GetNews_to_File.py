@@ -18,6 +18,10 @@ def get_news(api_link, topic, from_date , sort_by, api_Key):
     response = requests.get(url)
     print(response.json())
 
+def write_news(){
+    
+}
+
 def main():
     get_news(api_link, topic, from_date , sort_by, api_Key)
 
