@@ -35,19 +35,30 @@ def write_news_to_csv(articles):
     data_frame = pd.DataFrame(data, columns=['Title', 'Description'])
     data_frame.to_csv('new.csv', index=False, encoding='utf-8')
     print("News written to news.csv")
+    
+    put_in_form(data[0], data[1], data[2], data[3])
 
-def main():
-    topic = input("Tópico: ")
-    from_date = input("A partir da data (formato YYY-MM-DD): ")
-    sort_by = "popularity"
 
-    articles = get_news(api_link, topic, from_date, sort_by, api_key)
-    write_news_to_csv(articles)
-
-    if __name__ == "__main__":
-        main()
 
 # region processo de automação
+
+def put_in_form():
+    # Author
+    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys("")
+    time.sleep(5)
+
+    # Title
+    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys("")
+    time.sleep(5)
+
+    # Description
+    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys("")
+    time.sleep(5)
+
+    # Content
+    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys("")
+    time.sleep(5)
+
 
 def get_driver():
     options = webdriver.ChromeOptions()
@@ -71,8 +82,18 @@ def get_driver():
     return driver
 
 def main():
+
+    topic = input("Tópico: ")
+    from_date = input("A partir da data (formato YYY-MM-DD): ")
+    sort_by = "popularity"
+
+    articles = get_news(api_link, topic, from_date, sort_by, api_key)
+    write_news_to_csv(articles)
+
     driver = get_driver()
-    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys("TESTE")
-    time.sleep(25)
+
+    if __name__ == "__main__":
+        main()
+
 
 print(main())
