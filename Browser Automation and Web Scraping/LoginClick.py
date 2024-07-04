@@ -29,7 +29,7 @@ def get_driver():
 
     options.add_argument("disable-blink-features=AutomationControlled")
 
-    driver = webdriver.Chrome(
+    driver = webdriver.C/hrome(
         options)  #A variável options contém todos os argumentos
     driver.get("http://automated.pythonanywhere.com/login/")
     return driver

@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 
 # region request API
+
 api_link = "https://newsapi.org/v2/everything?"
 api_key = "80423fcb354f45ea8fb17e14b61fc04a"
 
@@ -49,3 +50,23 @@ def main():
 
 # region processo de automação
 
+def get_driver():
+    options = webdriver.ChromeOptions()
+
+    options.add_argument('disable-infobars')
+    options.add_argument('start-maxiized')
+    options.add_argument('disable-dev-shm-usage')
+    options.add_argument('no-sandbox')
+
+    options.add_experimental_option(
+        "excludeSwitches", ["enable-automation"]
+    )
+
+    options.add_argument('disable-blink-features=AutomationControlled')
+
+    driver = webdriver.Chrome(
+        options
+    )
+
+    driver.get("http://automated.pythonanywhere.com/login/")
+    return driver
