@@ -33,7 +33,7 @@ def write_news_to_csv(articles):
     data = [(article['author'], article['title'], article['description'], article['content']) for article in articles]
     
     for author, title, description, content in data:
-        put_in_form(author, title, description, content)
+        put_in_form(author , title, description, content)
 
     # data_frame = pd.DataFrame(data, columns=['Title', 'Description'])
     # data_frame.to_csv('new.csv', index=False, encoding='utf-8')
@@ -46,22 +46,18 @@ def put_in_form(author, title, description, content):
     if author != "[Removed]" and title != "[Removed]" and content != "[Removed]":
         driver = get_driver()
         # Author
-        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(author)
-        time.sleep(4)
-
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(author) 
         # Title
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(title)
         time.sleep(4)
-
         # Description
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(description)
         time.sleep(4)
-
         # Content
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(content)
         time.sleep(4)
 
-        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').click()
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span/span').click()
         
 
 
