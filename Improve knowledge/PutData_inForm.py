@@ -72,8 +72,8 @@ def organize_data_to_write(articles):
              article['urlToImage'],
              article['publishedAt']) for article in articles]
     
-    for author, title, description, content in data:
-        put_in_form(author , title, description, content)
+    for author, title, description, content, url, urlToImage, publishedAt in data:
+        put_in_form(author , title, description, content, url, urlToImage, publishedAt, publishedAt)
 
 # region AUTOMATION FORM
 
