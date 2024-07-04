@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys 
+
 import time
 
 # region GET DRIVER
@@ -41,7 +43,6 @@ def main():
     articles = get_news(api_link, topic, from_date, sort_by, api_key)
     organize_data_to_write(articles)
 
-
 # region GET NEWS
 
 api_link = "https://newsapi.org/v2/everything?"
@@ -72,29 +73,38 @@ def organize_data_to_write(articles):
              article['urlToImage'],
              article['publishedAt']) for article in articles]
     
-    for author, title, description, content, url, urlToImage, publishedAt in data:
-        put_in_form(author , title, description, content, url, urlToImage, publishedAt, publishedAt)
+
+    for author, title, description, content, url, urlToImage, publishedAt, in data:
+        put_in_form(author , title, description, url, content, urlToImage, publishedAt)
 
 # region AUTOMATION FORM
-
 def put_in_form(author, title, description, content, url, urlToImage, publishedAt):
     if author != "[Removed]" and title != "[Removed]" and content != "[Removed]":
+
         driver = get_driver()
+        driver.maximize_window()
+
         # Author
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(author) 
+        
         # Title
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(title)
+        
         # Description
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(description)
+        
         # Content
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(content)
+        
         # URL 
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(url)
+        
         # url da imagem
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[6]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(urlToImage)
-
-        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[7]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(publishedAt)
+        
         # publicado em
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[7]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(publishedAt)
+        
 
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span').click()
 
