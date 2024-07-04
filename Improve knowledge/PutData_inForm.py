@@ -4,7 +4,6 @@ import csv
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.by import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import time
@@ -68,11 +67,12 @@ def get_driver():
         options
     )
 
-    driver.get("http://automated.pythonanywhere.com/login/")
+    driver.get("https://docs.google.com/forms/d/e/1FAIpQLScswuDL2q7FS1OI2Cru3NY1X9kpBZiFN9F7f8t45JlXB712yA/viewform")
     return driver
 
 def main():
     driver = get_driver()
-    driver.find_element(By.XPATH, 'driver.find_element(By.XPATH, "//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input").send_keys("automated")').send_keys("TESTE")
+    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys("TESTE")
+    time.sleep(25)
 
 print(main())
