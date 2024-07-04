@@ -4,9 +4,7 @@ import csv
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
 
 import time
 
@@ -107,5 +105,7 @@ def put_in_form(author, title, description, content, url, urlToImage, publishedA
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[7]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(publishedAt)
         
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span').click()
+
+        ActionBuilder(driver).clear_actions()
 
 main()
