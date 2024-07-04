@@ -30,34 +30,36 @@ def write_news_to_csv(articles):
         print("No articles to write.")
         return
     
-    data = [(articles['author'], articles['title'], articles['description'], articles['content'])]
-
-    data_frame = pd.DataFrame(data, columns=['Title', 'Description'])
-    data_frame.to_csv('new.csv', index=False, encoding='utf-8')
-    print("News written to news.csv")
+    data = [(article['author'], article['title'], article['description'], article['content']) for article in articles]
     
-    put_in_form(data[0], data[1], data[2], data[3])
+    for author, title, description, content in data:
+        put_in_form(author, title, description, content)
 
+    # data_frame = pd.DataFrame(data, columns=['Title', 'Description'])
+    # data_frame.to_csv('new.csv', index=False, encoding='utf-8')
+    # print("News written to news.csv")
 
 
 # region processo de automação
 
-def put_in_form():
-    # Author
-    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys("")
-    time.sleep(5)
+def put_in_form(author, title, description, content):
 
-    # Title
-    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys("")
-    time.sleep(5)
+        driver = get_driver()
+        # Author
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(author)
+        time.sleep(4)
 
-    # Description
-    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys("")
-    time.sleep(5)
+        # Title
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(title)
+        time.sleep(4)
 
-    # Content
-    driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys("")
-    time.sleep(5)
+        # Description
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(description)
+        time.sleep(4)
+
+        # Content
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(content)
+        time.sleep(4)
 
 
 def get_driver():
@@ -96,4 +98,4 @@ def main():
         main()
 
 
-print(main())
+main()
