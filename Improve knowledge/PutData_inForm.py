@@ -43,7 +43,7 @@ def write_news_to_csv(articles):
 # region processo de automação
 
 def put_in_form(author, title, description, content):
-
+    if author != "[Removed]" and title != "[Removed]" and content != "[Removed]":
         driver = get_driver()
         # Author
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(author)
@@ -60,6 +60,9 @@ def put_in_form(author, title, description, content):
         # Content
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(content)
         time.sleep(4)
+
+        driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').click()
+        
 
 
 def get_driver():
