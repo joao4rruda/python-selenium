@@ -2,6 +2,14 @@ import requests
 import pandas as pd
 import csv
 
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.by import Keys
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import time
+
+# region request API
 api_link = "https://newsapi.org/v2/everything?"
 api_key = "80423fcb354f45ea8fb17e14b61fc04a"
 
@@ -38,3 +46,6 @@ def main():
 
     if __name__ == "__main__":
         main()
+
+# region processo de automação
+
