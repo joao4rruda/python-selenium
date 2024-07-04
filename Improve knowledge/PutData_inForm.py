@@ -16,7 +16,7 @@ def get_driver():
     options = webdriver.ChromeOptions()
 
     options.add_argument('disable-infobars')
-    options.add_argument('start-maxiized')
+    options.add_argument('start-maximized')
     options.add_argument('disable-dev-shm-usage')
     options.add_argument('no-sandbox')
 
@@ -24,10 +24,10 @@ def get_driver():
         "excludeSwitches", ["enable-automation"]
     )
 
-    options.add_argument('disable-blink-features=AutomationControlled')
+    options.add_argument('disable-blink-features=AutomationControlled') 
 
     driver = webdriver.Chrome(
-        options
+        options=options
     )
 
     driver.get("https://docs.google.com/forms/d/e/1FAIpQLScswuDL2q7FS1OI2Cru3NY1X9kpBZiFN9F7f8t45JlXB712yA/viewform")
@@ -35,9 +35,8 @@ def get_driver():
 
 # region MAIN
 def main():
-
     topic = input("Tópico: ")
-    from_date = input("A partir da data (formato YYY-MM-DD): ")
+    from_date = input("A partir da data (formato YYYY-MM-DD): ")
     sort_by = "popularity"
 
     articles = get_news(api_link, topic, from_date, sort_by, api_key)
@@ -57,7 +56,7 @@ def get_news(api_link, topic, from_date, sort_by, api_key):
         articles = content.get('articles', [])
         return articles
     else:
-        print(f"Failed to fetch new. Status code: {response.status_code}")
+        print(f"Failed to fetch news. Status code: {response.status_code}")
         return []
     
 def organize_data_to_write(articles):
@@ -74,8 +73,8 @@ def organize_data_to_write(articles):
              article['publishedAt']) for article in articles]
     
 
-    for author, title, description, content, url, urlToImage, publishedAt, in data:
-        put_in_form(author , title, description, url, content, urlToImage, publishedAt)
+    for author, title, description, content, url, urlToImage, publishedAt in data:
+        put_in_form(author, title, description, content, url, urlToImage, publishedAt)
 
 # region AUTOMATION FORM
 def put_in_form(author, title, description, content, url, urlToImage, publishedAt):
@@ -84,9 +83,11 @@ def put_in_form(author, title, description, content, url, urlToImage, publishedA
         driver = get_driver()
         driver.maximize_window()
 
+
+        time.sleep(2)
         # Author
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(author) 
-        
+ 
         # Title
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(title)
         
@@ -99,13 +100,12 @@ def put_in_form(author, title, description, content, url, urlToImage, publishedA
         # URL 
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(url)
         
-        # url da imagem
+        # URL da imagem
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[6]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(urlToImage)
         
-        # publicado em
+        # Publicado em
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[7]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(publishedAt)
         
-
         driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span').click()
 
 main()
