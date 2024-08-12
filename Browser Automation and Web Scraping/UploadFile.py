@@ -15,7 +15,6 @@ def get_driver():
     driver.get("https://automated.pythonanywhere.com")
     return driver
 
-
 def test_uploads(driver):
     driver = get_driver()
     driver.get("https://the-internet.herokuapp.com/upload")
@@ -25,3 +24,8 @@ def test_uploads(driver):
     file_input = driver.find_element(By.CSS_SELECTOR, "input[type='file']")
     file_input.send_keys(upload_file)
     driver.find_element(By.ID, "file-submit").click()
+
+    file_name_element = driver.find_element(By.ID, "uploaded-files")
+    file_name = file_name_element.text
+
+    assert file_name == "selenium-snapshot.png"
